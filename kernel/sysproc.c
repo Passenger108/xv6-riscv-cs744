@@ -22,6 +22,24 @@ sys_getpid(void)
   return myproc()->pid;
 }
 
+
+
+uint64
+sys_getppid(void)
+{
+ return myproc()->parent->pid;
+}
+
+uint64
+sys_square(void)
+{
+  int num;
+  argint(0, &num);
+  return num * num;
+}
+
+
+
 uint64
 sys_fork(void)
 {
