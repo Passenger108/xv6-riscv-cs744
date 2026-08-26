@@ -45,3 +45,5 @@ entry("uptime");
 entry("sync");
 entry("getppid");
 entry("square");
+entry("get_child_count");
+entry("get_process_child_count");

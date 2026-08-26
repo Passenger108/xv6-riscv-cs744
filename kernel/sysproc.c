@@ -38,6 +38,20 @@ sys_square(void)
   return num * num;
 }
 
+uint64
+sys_get_child_count(void)
+{
+  return kchildcount();
+}
+
+uint64
+sys_get_process_child_count(void)
+{
+  int pid;
+  argint(0, &pid);
+  return kprocesschildcount(pid);
+}
+
 
 
 uint64

@@ -124,6 +124,7 @@ allocproc(void)
 found:
   p->pid = allocpid();
   p->state = USED;
+  p->child_count = 0;
 
   // Allocate a trapframe page.
   if ((p->trapframe = (struct trapframe *)kalloc()) == 0) {
@@ -297,6 +298,10 @@ kfork(void)
   np->parent = p;
   release(&wait_lock);
 
+  acquire(&p->lock);
+  p->child_count++;
+  release(&p->lock);
+
   acquire(&np->lock);
   np->state = RUNNABLE;
   release(&np->lock);
@@ -397,6 +402,11 @@ kwait(uint64 addr)
           pp->parent = 0;
           freeproc(pp);
           release(&pp->lock);
+
+          acquire(&p->lock);
+          p->child_count--;
+          release(&p->lock);
+
           release(&wait_lock);
           return pid;
         }
@@ -698,4 +708,31 @@ procdump(void)
     printk("%d %s %s", p->pid, state, p->name);
     printk("\n");
   }
+}
+
+
+int
+kchildcount(void)
+{
+  struct proc *p = myproc();
+  acquire(&p->lock);
+  int count = p->child_count;
+  release(&p->lock);
+  return count;
+}
+
+int
+kprocesschildcount(int pid)
+{
+  struct proc *p;
+  for (p = proc; p < &proc[NPROC]; p++) {
+    acquire(&p->lock);
+    if (p->pid == pid) {
+      int count = p->child_count;
+      release(&p->lock);
+      return count;
+    }
+    release(&p->lock);
+  }
+  return -1;
 }
