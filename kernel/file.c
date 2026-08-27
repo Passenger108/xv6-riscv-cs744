@@ -177,3 +177,42 @@ filewrite(struct file *f, uint64 addr, int n)
 
   return ret;
 }
+
+int
+fileget_inode_num(int fd)
+{
+  struct proc *p = myproc();
+  if (fd < 0 || fd >= NOFILE)
+    return -1;
+
+  struct file *f = p->ofile[fd];
+  if (f == 0)
+    return -1;
+
+  if (f->type != FD_INODE)
+    return -1;
+
+  if (f->readable == 0)
+    return -1;
+
+  return f->ip->inum;
+}
+
+int
+fileget_read_offset(int fd)
+{
+  struct proc *p = myproc();
+  if (fd < 0 || fd >= NOFILE)
+    return -1;
+  struct file *f = p->ofile[fd];
+  if (f == 0)
+    return -1;
+
+  if (f->type != FD_INODE)
+    return -1;
+
+  if (f->readable == 0)
+    return -1;
+
+  return f->off;
+}
