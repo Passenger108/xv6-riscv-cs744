@@ -53,6 +53,18 @@ sys_get_process_child_count(void)
 }
 
 
+uint64
+sys_nfork(void)
+{
+  int n;
+  uint64 child_pids;
+
+  argint(0, &n);
+  argaddr(1,&child_pids);
+
+  return knfork(n, (int*)child_pids) < 0 ? -1 : n;
+}
+
 
 uint64
 sys_fork(void)

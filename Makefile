@@ -156,6 +156,7 @@ UPROGS=\
 	$U/_ppid\
 	$U/_sq\
 	$U/_test_children\
+	$U/_test_nfork\
 
 fs.img: mkfs/mkfs README dummy gt1 gt2 gt3  $(UPROGS)
 	mkfs/mkfs fs.img README dummy gt1 gt2 gt3  $(UPROGS)

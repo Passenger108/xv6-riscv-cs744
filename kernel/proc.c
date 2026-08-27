@@ -736,3 +736,26 @@ kprocesschildcount(int pid)
   }
   return -1;
 }
+
+
+int
+knfork(int n, int *child_pids)
+{
+  struct proc *p = myproc();
+  
+  int kpids[n];
+  int i,cpid;
+
+  for (i = 0; i < n; i++) {
+    cpid = kfork();
+    if (cpid < 0) {
+      return cpid;
+    }
+    kpids[i] = cpid;
+  }
+
+  if (copyout(p->pagetable, p->sz, (uint64)child_pids, (char*)kpids, sizeof(int)*n) < 0) {
+    return -1;
+  }
+  return 0;
+}
