@@ -80,6 +80,20 @@ sys_read(void)
 }
 
 uint64
+sys_peek2(void)
+{
+  struct file *f;
+  int n;
+  uint64 p;
+
+  argint(2, &n);
+  argaddr(1, &p);
+  if (argfd(0, 0, &f) < 0)
+    return -1;
+  return filepeek2(f, p, n);
+}
+
+uint64
 sys_write(void)
 {
   struct file *f;

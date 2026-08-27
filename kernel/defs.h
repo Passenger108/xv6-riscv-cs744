@@ -36,6 +36,7 @@ int             filestat(struct file*, uint64 addr);
 int             filewrite(struct file*, uint64, int n);
 int             fileget_inode_num(int fd);
 int             fileget_read_offset(int fd);
+int             filepeek2(struct file*, uint64, int n);
 
 // fs.c
 void            fsinit(int);
