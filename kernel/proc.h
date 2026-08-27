@@ -89,6 +89,7 @@ struct proc {
   int xstate;           // Exit status to be returned to parent's wait
   int pid;              // Process ID
   int child_count;      // Number of child processes
+  int syscall_count_array[50]; // Array to count system calls made by the process
 
   // wait_lock must be held when using this:
   struct proc *parent; // Parent process

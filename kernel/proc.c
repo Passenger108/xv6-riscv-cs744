@@ -125,6 +125,7 @@ found:
   p->pid = allocpid();
   p->state = USED;
   p->child_count = 0;
+  memset(p->syscall_count_array, 0, sizeof(p->syscall_count_array));
 
   // Allocate a trapframe page.
   if ((p->trapframe = (struct trapframe *)kalloc()) == 0) {
@@ -758,4 +759,49 @@ knfork(int n, int *child_pids)
     return -1;
   }
   return 0;
+}
+
+int
+ksys_print_syscalls(void)
+{
+  struct proc *p = myproc();
+
+  printk("Syscall counts for current process:\n");
+  printk("syscall_number invocations\n");
+
+  for(int i=0; i<50; i++)
+  {
+    acquire(&p->lock);
+    int count = p->syscall_count_array[i];
+    release(&p->lock);
+    if(count > 0)
+      printk("%d \t\t %d\n", i, count);
+  }
+  return 0;
+}
+
+int
+ksys_print_process_syscalls(int pid)
+{
+  struct proc *p;
+  for (p = proc; p < &proc[NPROC]; p++) {
+    acquire(&p->lock);
+    if (p->pid == pid) { //found
+      printk("Syscall counts for process pid %d:\n", pid);
+      printk("syscall_number invocations\n");
+      
+      for(int i=0; i<50; i++)
+      {
+        int count = p->syscall_count_array[i];
+        if(count > 0)
+          printk("%d \t\t %d\n", i, count);
+      }
+
+      release(&p->lock);
+      return 0;
+    }
+    release(&p->lock);
+  }
+  printk("Process with PID %d not found.\n", pid);
+  return -1;
 }

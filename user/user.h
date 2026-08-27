@@ -30,6 +30,8 @@ int square(int num);
 int get_child_count(void);
 int get_process_child_count(int pid);
 int nfork(int n, int *child_pids);
+int print_syscalls(void);
+int print_process_syscalls(int pid);
 
 // ulib.c
 int stat(const char *, struct stat *);

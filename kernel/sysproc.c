@@ -65,6 +65,20 @@ sys_nfork(void)
   return knfork(n, (int*)child_pids) < 0 ? -1 : n;
 }
 
+uint64
+sys_print_syscalls(void)
+{
+  return ksys_print_syscalls();
+}
+
+uint64
+sys_print_process_syscalls(void)
+{
+  int pid;
+  argint(0,&pid);
+  return ksys_print_process_syscalls(pid);
+}
+
 
 uint64
 sys_fork(void)

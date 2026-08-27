@@ -106,6 +106,8 @@ void            procdump(void);
 int             kchildcount(void);
 int             kprocesschildcount(int pid);
 int             knfork(int n, int *child_pids);
+int             ksys_print_syscalls(void);
+int             ksys_print_process_syscalls(int pid);
 
 // swtch.S
 void            swtch(struct context*, struct context*);
