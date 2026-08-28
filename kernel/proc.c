@@ -822,3 +822,21 @@ kget_pteflags(pagetable_t pagetable, uint64 va)
 
   return 0;
 }
+
+int
+kva2pa(uint64 va, uint64 userspace_pa)
+{
+  struct proc *p = myproc();
+  pte_t *pte = walk(p->pagetable, va, 0);
+  if (pte == 0) {
+    return -1;
+  }
+  if((*pte & PTE_V) == 0)
+    return -1;
+  
+  uint64 pa = PTE2PA(*pte) + (va - PGROUNDDOWN(va));
+
+  if(copyout(p->pagetable,p->sz,userspace_pa,(char *)&pa,sizeof(pa)) < 0)
+        return -1;
+  return 0;
+}

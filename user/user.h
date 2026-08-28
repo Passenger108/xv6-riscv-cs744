@@ -37,6 +37,7 @@ int get_read_offset(int fd);
 int peek2(int fd, char* user_addr, int num_bytes);
 int pte_valid(uint64 va);
 int get_pteflags(uint64 va);
+int va2pa(uint64 va, uint64 *pa);
 
 // ulib.c
 int stat(const char *, struct stat *);

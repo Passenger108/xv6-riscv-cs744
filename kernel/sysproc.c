@@ -96,6 +96,16 @@ sys_get_pteflags(void)
 }
 
 uint64
+sys_va2pa(void)
+{
+  uint64 va;
+  uint64 userspace_pa;
+  argaddr(0,&va);
+  argaddr(1,&userspace_pa);
+  return kva2pa(va, userspace_pa);
+}
+
+uint64
 sys_fork(void)
 {
   return kfork();

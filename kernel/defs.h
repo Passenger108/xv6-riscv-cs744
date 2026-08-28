@@ -112,6 +112,7 @@ int             knfork(int n, int *child_pids);
 int             ksys_print_syscalls(void);
 int             ksys_print_process_syscalls(int pid);
 int             kget_pteflags(pagetable_t pagetable, uint64 va);
+int             kva2pa(uint64 va, uint64 userspace_pa);
 
 // swtch.S
 void            swtch(struct context*, struct context*);

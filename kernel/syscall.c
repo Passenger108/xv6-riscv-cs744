@@ -116,6 +116,7 @@ extern uint64 sys_get_read_offset(void);
 extern uint64 sys_peek2(void);
 extern uint64 sys_pte_valid(void);
 extern uint64 sys_get_pteflags(void);
+extern uint64 sys_va2pa(void);
 
 // An array mapping syscall numbers from syscall.h
 // to the function that handles the system call.
@@ -155,6 +156,7 @@ static uint64 (*syscalls[])(void) = {
   [SYS_peek2] sys_peek2,
   [SYS_pte_valid] sys_pte_valid,
   [SYS_get_pteflags] sys_get_pteflags,
+  [SYS_va2pa] sys_va2pa,
   // clang-format on
 };
 
