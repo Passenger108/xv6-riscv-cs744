@@ -38,6 +38,7 @@ int peek2(int fd, char* user_addr, int num_bytes);
 int pte_valid(uint64 va);
 int get_pteflags(uint64 va);
 int va2pa(uint64 va, uint64 *pa);
+int getvasize(int pid);
 
 // ulib.c
 int stat(const char *, struct stat *);

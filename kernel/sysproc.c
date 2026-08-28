@@ -106,6 +106,14 @@ sys_va2pa(void)
 }
 
 uint64
+sys_getvasize(void)
+{
+  int pid;
+  argint(0, &pid);
+  return kgetvasize(pid);
+}
+
+uint64
 sys_fork(void)
 {
   return kfork();

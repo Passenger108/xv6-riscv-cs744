@@ -840,3 +840,22 @@ kva2pa(uint64 va, uint64 userspace_pa)
         return -1;
   return 0;
 }
+
+int
+kgetvasize(int pid)
+{
+  struct proc *p;
+
+  for(p = proc; p < &proc[NPROC]; p++)
+  {
+    acquire(&p->lock);
+    if(p->pid == pid && p->state != UNUSED)
+    {
+      int size = p->sz;
+      release(&p->lock);
+      return size;
+    }
+    release(&p->lock);
+  }
+  return -1;
+}
