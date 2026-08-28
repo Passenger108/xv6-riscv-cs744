@@ -805,3 +805,20 @@ ksys_print_process_syscalls(int pid)
   printk("Process with PID %d not found.\n", pid);
   return -1;
 }
+
+int
+kget_pteflags(pagetable_t pagetable, uint64 va)
+{
+  pte_t *pte = walk(pagetable, va, 0);
+  if (pte == 0) {
+    return -1;
+  }
+
+  printk("VA: 0x%p -> R:%d W:%d X:%d U:%d\n", (void*)va,
+         (*pte & PTE_R) ? 1 : 0,
+         (*pte & PTE_W) ? 1 : 0,
+         (*pte & PTE_X) ? 1 : 0,
+         (*pte & PTE_U) ? 1 : 0);
+
+  return 0;
+}

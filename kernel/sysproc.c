@@ -88,6 +88,14 @@ sys_pte_valid(void)
 }
 
 uint64
+sys_get_pteflags(void)
+{
+  uint64 va;
+  argaddr(0,&va);
+  return kget_pteflags(myproc()->pagetable, va);
+}
+
+uint64
 sys_fork(void)
 {
   return kfork();

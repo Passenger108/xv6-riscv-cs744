@@ -111,6 +111,7 @@ int             kprocesschildcount(int pid);
 int             knfork(int n, int *child_pids);
 int             ksys_print_syscalls(void);
 int             ksys_print_process_syscalls(int pid);
+int             kget_pteflags(pagetable_t pagetable, uint64 va);
 
 // swtch.S
 void            swtch(struct context*, struct context*);
