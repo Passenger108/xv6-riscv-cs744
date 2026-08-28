@@ -711,7 +711,6 @@ procdump(void)
   }
 }
 
-
 int
 kchildcount(void)
 {
@@ -738,14 +737,13 @@ kprocesschildcount(int pid)
   return -1;
 }
 
-
 int
 knfork(int n, int *child_pids)
 {
   struct proc *p = myproc();
-  
+
   int kpids[n];
-  int i,cpid;
+  int i, cpid;
 
   for (i = 0; i < n; i++) {
     cpid = kfork();
@@ -755,7 +753,8 @@ knfork(int n, int *child_pids)
     kpids[i] = cpid;
   }
 
-  if (copyout(p->pagetable, p->sz, (uint64)child_pids, (char*)kpids, sizeof(int)*n) < 0) {
+  if (copyout(p->pagetable, p->sz, (uint64)child_pids, (char *)kpids,
+              sizeof(int) * n) < 0) {
     return -1;
   }
   return 0;
@@ -769,12 +768,11 @@ ksys_print_syscalls(void)
   printk("Syscall counts for current process:\n");
   printk("syscall_number invocations\n");
 
-  for(int i=0; i<50; i++)
-  {
+  for (int i = 0; i < 50; i++) {
     acquire(&p->lock);
     int count = p->syscall_count_array[i];
     release(&p->lock);
-    if(count > 0)
+    if (count > 0)
       printk("%d \t\t %d\n", i, count);
   }
   return 0;
@@ -789,11 +787,10 @@ ksys_print_process_syscalls(int pid)
     if (p->pid == pid) { //found
       printk("Syscall counts for process pid %d:\n", pid);
       printk("syscall_number invocations\n");
-      
-      for(int i=0; i<50; i++)
-      {
+
+      for (int i = 0; i < 50; i++) {
         int count = p->syscall_count_array[i];
-        if(count > 0)
+        if (count > 0)
           printk("%d \t\t %d\n", i, count);
       }
 
@@ -814,10 +811,8 @@ kget_pteflags(pagetable_t pagetable, uint64 va)
     return -1;
   }
 
-  printk("VA: 0x%p -> R:%d W:%d X:%d U:%d\n", (void*)va,
-         (*pte & PTE_R) ? 1 : 0,
-         (*pte & PTE_W) ? 1 : 0,
-         (*pte & PTE_X) ? 1 : 0,
+  printk("VA: 0x%p -> R:%d W:%d X:%d U:%d\n", (void *)va,
+         (*pte & PTE_R) ? 1 : 0, (*pte & PTE_W) ? 1 : 0, (*pte & PTE_X) ? 1 : 0,
          (*pte & PTE_U) ? 1 : 0);
 
   return 0;
@@ -831,13 +826,13 @@ kva2pa(uint64 va, uint64 userspace_pa)
   if (pte == 0) {
     return -1;
   }
-  if((*pte & PTE_V) == 0)
+  if ((*pte & PTE_V) == 0)
     return -1;
-  
+
   uint64 pa = PTE2PA(*pte) + (va - PGROUNDDOWN(va));
 
-  if(copyout(p->pagetable,p->sz,userspace_pa,(char *)&pa,sizeof(pa)) < 0)
-        return -1;
+  if (copyout(p->pagetable, p->sz, userspace_pa, (char *)&pa, sizeof(pa)) < 0)
+    return -1;
   return 0;
 }
 
@@ -846,11 +841,9 @@ kgetvasize(int pid)
 {
   struct proc *p;
 
-  for(p = proc; p < &proc[NPROC]; p++)
-  {
+  for (p = proc; p < &proc[NPROC]; p++) {
     acquire(&p->lock);
-    if(p->pid == pid && p->state != UNUSED)
-    {
+    if (p->pid == pid && p->state != UNUSED) {
       int size = p->sz;
       release(&p->lock);
       return size;

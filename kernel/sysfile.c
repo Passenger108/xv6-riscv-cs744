@@ -536,12 +536,11 @@ sys_pipe(void)
   return 0;
 }
 
-
 uint64
 sys_get_inode_num(void)
 {
   int fd;
-  argint(0,&fd);
+  argint(0, &fd);
   return fileget_inode_num(fd);
 }
 
@@ -549,6 +548,6 @@ uint64
 sys_get_read_offset(void)
 {
   int fd;
-  argint(0,&fd);
+  argint(0, &fd);
   return fileget_read_offset(fd);
 }

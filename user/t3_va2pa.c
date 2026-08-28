@@ -17,9 +17,9 @@ main(int argc, char *argv[])
   uint64 va2 = va1 + 100;
   uint64 pa1, pa2;
 
-  printf("VA1: 0x%lx -> PA1: 0x%lx\n", va1, va2pa(va1, &pa1)==0? pa1 : -1);
+  printf("VA1: 0x%lx -> PA1: 0x%lx\n", va1, va2pa(va1, &pa1) == 0 ? pa1 : -1);
 
-  printf("VA2: 0x%lx -> PA2: 0x%lx\n", va2, va2pa(va2, &pa2)==0? pa2 : -1);
+  printf("VA2: 0x%lx -> PA2: 0x%lx\n", va2, va2pa(va2, &pa2) == 0 ? pa2 : -1);
 
   exit(0);
 }

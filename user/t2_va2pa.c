@@ -17,7 +17,8 @@ main(int argc, char *argv[])
   } else if (pid == 0) {
     // Child
     printf("Virtual address  of variable N in child :  0x%lx\n", va);
-    printf("Physical address of variable N in child :  0x%lx\n", va2pa(va, &pa)==0? pa : -1);
+    printf("Physical address of variable N in child :  0x%lx\n",
+           va2pa(va, &pa) == 0 ? pa : -1);
 
     exit(0);
   } else {
@@ -25,7 +26,8 @@ main(int argc, char *argv[])
     wait(0);
 
     printf("Virtual address  of variable N in parent : 0x%lx\n", va);
-    printf("Physical address of variable N in parent : 0x%lx\n", va2pa(va, &pa)==0? pa : -1);
+    printf("Physical address of variable N in parent : 0x%lx\n",
+           va2pa(va, &pa) == 0 ? pa : -1);
 
     exit(0);
   }

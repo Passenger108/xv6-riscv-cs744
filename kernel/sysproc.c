@@ -22,12 +22,10 @@ sys_getpid(void)
   return myproc()->pid;
 }
 
-
-
 uint64
 sys_getppid(void)
 {
- return myproc()->parent->pid;
+  return myproc()->parent->pid;
 }
 
 uint64
@@ -52,7 +50,6 @@ sys_get_process_child_count(void)
   return kprocesschildcount(pid);
 }
 
-
 uint64
 sys_nfork(void)
 {
@@ -60,9 +57,9 @@ sys_nfork(void)
   uint64 child_pids;
 
   argint(0, &n);
-  argaddr(1,&child_pids);
+  argaddr(1, &child_pids);
 
-  return knfork(n, (int*)child_pids) < 0 ? -1 : n;
+  return knfork(n, (int *)child_pids) < 0 ? -1 : n;
 }
 
 uint64
@@ -75,7 +72,7 @@ uint64
 sys_print_process_syscalls(void)
 {
   int pid;
-  argint(0,&pid);
+  argint(0, &pid);
   return ksys_print_process_syscalls(pid);
 }
 
@@ -83,7 +80,7 @@ uint64
 sys_pte_valid(void)
 {
   uint64 va;
-  argaddr(0,&va);
+  argaddr(0, &va);
   return ismapped(myproc()->pagetable, va);
 }
 
@@ -91,7 +88,7 @@ uint64
 sys_get_pteflags(void)
 {
   uint64 va;
-  argaddr(0,&va);
+  argaddr(0, &va);
   return kget_pteflags(myproc()->pagetable, va);
 }
 
@@ -100,8 +97,8 @@ sys_va2pa(void)
 {
   uint64 va;
   uint64 userspace_pa;
-  argaddr(0,&va);
-  argaddr(1,&userspace_pa);
+  argaddr(0, &va);
+  argaddr(1, &userspace_pa);
   return kva2pa(va, userspace_pa);
 }
 

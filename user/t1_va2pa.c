@@ -5,21 +5,21 @@
 int
 main(int argc, char *argv[])
 {
-    char *p1;
-    char *p2;
-    uint64 pa1, pa2;
+  char *p1;
+  char *p2;
+  uint64 pa1, pa2;
 
-    // Allocate first page
-    p1 = sbrk(4096);
+  // Allocate first page
+  p1 = sbrk(4096);
 
-    // Allocate second page
-    p2 = sbrk(4096);
+  // Allocate second page
+  p2 = sbrk(4096);
 
-    printf("VA1: 0x%lx -> PA1: 0x%lx\n",
-           (uint64)p1, va2pa((uint64)p1, &pa1)==0? pa1 : -1);
+  printf("VA1: 0x%lx -> PA1: 0x%lx\n", (uint64)p1,
+         va2pa((uint64)p1, &pa1) == 0 ? pa1 : -1);
 
-    printf("VA2: 0x%lx -> PA2: 0x%lx\n",
-           (uint64)p2, va2pa((uint64)p2, &pa2)==0? pa2 : -1);
+  printf("VA2: 0x%lx -> PA2: 0x%lx\n", (uint64)p2,
+         va2pa((uint64)p2, &pa2) == 0 ? pa2 : -1);
 
-    exit(0);
+  exit(0);
 }

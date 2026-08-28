@@ -5,11 +5,12 @@
 int global_init = 100;
 const int global_const = 500;
 
-#define PGSIZE 4096 // bytes per page
-#define MAXVA (1L << (9 + 9 + 9 + 12 - 1))
+#define PGSIZE     4096 // bytes per page
+#define MAXVA      (1L << (9 + 9 + 9 + 12 - 1))
 #define TRAMPOLINE (MAXVA - PGSIZE)
 
-int main(int argc, char *argv[])
+int
+main(int argc, char *argv[])
 {
   int stack_var = 42; // Stack variable
 
